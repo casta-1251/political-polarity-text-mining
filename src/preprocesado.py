@@ -48,7 +48,7 @@ df[["row_id", "cluster_id", "split"] + cols[2:]].to_csv("data/train_clean.csv", 
 df[df.split == "dev"][cols].to_csv("data/train_dev.csv", index=False)
 df[df.split == "test"][cols].drop(columns="fold").to_csv("data/test_holdout.csv", index=False)
 
-# 8. Comprobaciones finales para evitar data leakages o ids no unívocos
+# Comprobaciones finales para evitar data leakages o ids no unívocos
 assert df.row_id.is_unique
 assert set(df[df.split == "dev"].cluster_id).isdisjoint(df[df.split == "test"].cluster_id)
 assert (df.groupby("cluster_id").fold.nunique() == 1).all()
