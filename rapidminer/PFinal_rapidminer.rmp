@@ -79,7 +79,7 @@
       </operator>
       <operator activated="true" class="sample_stratified" compatibility="12.1.001" expanded="true" height="82" name="Sample (Stratified)" width="90" x="112" y="340">
         <parameter key="sample" value="absolute"/>
-        <parameter key="sample_size" value="50000"/>
+        <parameter key="sample_size" value="100000"/>
         <parameter key="sample_ratio" value="0.1"/>
         <parameter key="use_local_random_seed" value="true"/>
         <parameter key="local_random_seed" value="42"/>
@@ -135,11 +135,11 @@
         <parameter key="repository_entry" value="data/Datos_PFinal"/>
       </operator>
       <operator activated="true" class="concurrency:cross_validation" compatibility="12.1.001" expanded="true" height="145" name="Cross Validation" width="90" x="782" y="391">
-        <parameter key="split_on_batch_attribute" value="true"/>
+        <parameter key="split_on_batch_attribute" value="false"/>
         <parameter key="leave_one_out" value="false"/>
         <parameter key="number_of_folds" value="10"/>
         <parameter key="sampling_type" value="automatic"/>
-        <parameter key="use_local_random_seed" value="false"/>
+        <parameter key="use_local_random_seed" value="true"/>
         <parameter key="local_random_seed" value="1992"/>
         <parameter key="enable_parallel_execution" value="true"/>
         <process expanded="true">
@@ -187,6 +187,7 @@
           </operator>
           <connect from_port="model" to_op="Apply Model" to_port="model"/>
           <connect from_port="test set" to_op="Apply Model" to_port="unlabelled data"/>
+          <connect from_port="through 1" to_port="test set results"/>
           <connect from_op="Apply Model" from_port="labelled data" to_op="Performance (2)" to_port="labelled data"/>
           <connect from_op="Performance (2)" from_port="performance" to_port="performance 1"/>
           <portSpacing port="source_model" spacing="0"/>
