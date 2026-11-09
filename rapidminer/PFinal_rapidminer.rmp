@@ -77,14 +77,21 @@
           <parameter key="row_id" value="id"/>
         </list>
       </operator>
+      <operator activated="true" class="sample_stratified" compatibility="12.1.001" expanded="true" height="82" name="Sample (Stratified)" width="90" x="112" y="340">
+        <parameter key="sample" value="absolute"/>
+        <parameter key="sample_size" value="50000"/>
+        <parameter key="sample_ratio" value="0.1"/>
+        <parameter key="use_local_random_seed" value="true"/>
+        <parameter key="local_random_seed" value="42"/>
+      </operator>
       <operator activated="true" class="text:process_document_from_data" compatibility="11.0.002" expanded="true" height="82" name="Process Documents from Data" width="90" x="313" y="340">
         <parameter key="create_word_vector" value="true"/>
         <parameter key="vector_creation" value="TF-IDF"/>
         <parameter key="add_meta_information" value="true"/>
         <parameter key="keep_text" value="false"/>
-        <parameter key="prune_method" value="none"/>
-        <parameter key="prune_below_percent" value="3.0"/>
-        <parameter key="prune_above_percent" value="30.0"/>
+        <parameter key="prune_method" value="percentual"/>
+        <parameter key="prune_below_percent" value="1.0"/>
+        <parameter key="prune_above_percent" value="95.0"/>
         <parameter key="prune_below_rank" value="0.05"/>
         <parameter key="prune_above_rank" value="0.95"/>
         <parameter key="datamanagement" value="double_sparse_array"/>
@@ -107,7 +114,7 @@
             <parameter key="encoding" value="UTF-8"/>
           </operator>
           <operator activated="true" class="text:stem_snowball" compatibility="11.0.002" expanded="true" height="68" name="Stem (Snowball)" width="90" x="916" y="85">
-            <parameter key="language" value="English"/>
+            <parameter key="language" value="Spanish"/>
           </operator>
           <operator activated="true" class="text:filter_by_length" compatibility="11.0.002" expanded="true" height="68" name="Filter Tokens (by Length)" width="90" x="1117" y="85">
             <parameter key="min_chars" value="4"/>
@@ -197,7 +204,8 @@
       <connect from_op="Read CSV" from_port="output" to_op="Select Attributes" to_port="example set input"/>
       <connect from_op="Select Attributes" from_port="example set output" to_op="Nominal to Text" to_port="example set input"/>
       <connect from_op="Nominal to Text" from_port="example set output" to_op="Set Role" to_port="example set input"/>
-      <connect from_op="Set Role" from_port="example set output" to_op="Process Documents from Data" to_port="example set"/>
+      <connect from_op="Set Role" from_port="example set output" to_op="Sample (Stratified)" to_port="example set input"/>
+      <connect from_op="Sample (Stratified)" from_port="example set output" to_op="Process Documents from Data" to_port="example set"/>
       <connect from_op="Process Documents from Data" from_port="example set" to_op="Cross Validation" to_port="example set"/>
       <connect from_op="Process Documents from Data" from_port="word list" to_op="Store" to_port="input"/>
       <connect from_op="Cross Validation" from_port="model" to_op="Store (2)" to_port="input"/>
